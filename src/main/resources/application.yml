@@ -1,0 +1,70 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # This includes all endpoints
+  endpoint:
+    health:
+      show-details: always # This configures the health endpoint to always show details
+  info:
+    env:
+      enabled: true # Enables environment properties to be shown in the info endpoint
+    build:
+      enabled: true # Enables build properties to be shown in the info endpoint
+  metrics:
+    enabled: true # Ensures metrics are enabled
+  logfile:
+    external-file: ./logfile.log
+---
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: abcd4623
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+w:
+  message: Welcome to dailu!!
+
+---
+# Dev profile configuration
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+  w:
+    message: Welcome to dailu!! (Development)
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: '*'
+
+---
+# Prod profile configuration
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ytdemo-prod
+  w:
+    message: Welcome to dailu!! (Production)
+
+---
+# QA profile configuration
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ytdemo-qa
+  w:
+    message: Welcome to dailu!!
